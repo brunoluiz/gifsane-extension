@@ -1,34 +1,52 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0.0",
-  "name": "GIF as Video",
+  "name": "GIF to Video",
   "author": "Bruno Luiz Silva <contact@brunoluiz.net>",
   "content_scripts": [
     {
-      "matches": ["http://*/*","https://*/*"],
+      "matches": [
+        "*://*/*"
+      ],
       "all_frames": true,
-      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/js/content.js"]
+      "js": ["src/vendor/ffmpeg.min.js", "src/js/content.js"]
     }
   ],
-  "options_page": "src/options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/vendor/ffmpeg-core.js",
+        "src/vendor/ffmpeg-core.wasm",
+        "src/vendor/ffmpeg-core.worker.js",
+        "src/vendor/ffmpeg-min.js.map"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "48": "src/img/icon-48.png",
+      "128": "src/img/icon-128.png"
+    }
+  },
   "permissions": [
     "storage",
-    "activeTab",
-    "*://*"
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
   ],
   "icons": {
     "48": "src/img/icon-48.png",
     "128": "src/img/icon-128.png"
   },
-  "content_security_policy": "default-src 'self'; unsafe-eval",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{01e4670b-532b-42ed-88c2-c7b46d05133a}"
-    }
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; media-src * blob:"
   },
-  "applications": {
-    "gecko": {
-      "id": "{01e4670b-532b-42ed-88c2-c7b46d05133a}"
-    }
+  "cross_origin_embedder_policy": {
+    "value": "require-corp"
+  },
+  "cross_origin_opener_policy": {
+    "value": "cross-origin"
   }
 }
