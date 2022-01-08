@@ -9,7 +9,7 @@
         "*://*/*"
       ],
       "all_frames": true,
-      "js": ["src/vendor/ffmpeg.min.js", "src/js/content.js"]
+      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/js/content.js"]
     }
   ],
   "web_accessible_resources": [
@@ -47,6 +47,6 @@
     "value": "require-corp"
   },
   "cross_origin_opener_policy": {
-    "value": "cross-origin"
+    "value": "same-origin"
   }
 }
