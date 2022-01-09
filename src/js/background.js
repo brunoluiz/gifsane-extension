@@ -26,9 +26,6 @@ chrome.extension.onMessage.addListener(function (
   sendResponse
 ) {
   const process = async () => {
-    // this is 100% racy
-    await init();
-
     const [inputFileName, outputFileName] = [
       createFileName("gif"),
       createFileName("mp4"),
@@ -49,3 +46,7 @@ chrome.extension.onMessage.addListener(function (
   process();
   return true;
 });
+
+(async () => {
+  await init();
+})();
