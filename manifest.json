@@ -16,18 +16,23 @@
     "src/img/*",
     "src/vendor/*"
   ],
-  "action": {
-    "default_icon": {
-      "48": "src/img/icon-48.png",
-      "128": "src/img/icon-128.png"
-    }
+  "background": {
+    "scripts": [
+      "src/js/background.js"
+    ],
+    "persistent": true
   },
   "permissions": [
     "storage",
-    "activeTab"
-  ],
-  "host_permissions": [
-    "*://*/*"
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "management"
   ],
   "icons": {
     "48": "src/img/icon-48.png",
