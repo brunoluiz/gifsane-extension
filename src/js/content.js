@@ -17,8 +17,7 @@ const start = async (obj) => {
   loading.style.justifyContent = "center";
   loading.style.height = `${height}px`;
   loading.style.width = `${width}px`;
-  loading.style.border = "1px solid #eee";
-  loading.style.background = "transparent";
+  loading.style.background = "rgba(0,0,0,.1)";
 
   loadingGif.src = chrome.runtime.getURL("src/img/loading.gif");
   loadingGif.width = 48;
