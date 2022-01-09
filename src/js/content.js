@@ -1,17 +1,3 @@
-const createFileName = (ext) =>
-  `${Math.floor(Math.random() * Math.pow(2, 32) + 1)}.${ext}`;
-let ffmpeg;
-
-const init = async () => {
-  if (ffmpeg) return;
-
-  const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
-  const settings = { corePath };
-
-  ffmpeg = await FFmpeg.createFFmpeg(settings);
-  await ffmpeg.load();
-};
-
 const addClickHandlersAllElements = () => {
   document.querySelectorAll("img").forEach((img) => {
     if (!img.src.includes(".gif")) return;
@@ -44,37 +30,26 @@ const start = async (obj) => {
   loading.appendChild(loadingGif);
   gif.parentNode.replaceChild(loading, gif);
 
-  // this is 100% racy
-  await init();
+  chrome.extension.sendMessage({ src: gif.src }, async function ({ blobText }) {
+    const blob = await (await fetch(blobText)).blob();
+    const url = URL.createObjectURL(blob);
 
-  const [inputFileName, outputFileName] = [
-    createFileName("gif"),
-    createFileName("mp4"),
-  ];
-  const file = await FFmpeg.fetchFile(obj.src);
-  ffmpeg.FS("writeFile", inputFileName, file);
-  await ffmpeg.run("-f", "gif", "-i", inputFileName, outputFileName);
-  const data = ffmpeg.FS("readFile", outputFileName);
-  const url = URL.createObjectURL(
-    new Blob([data.buffer], { type: "video/mp4" })
-  );
+    const video = document.createElement("video");
+    video.width = width;
+    video.height = height;
+    video.style = style;
+    video.controls = true;
+    video.autoplay = true;
 
-  const video = document.createElement("video");
-  video.width = width;
-  video.height = height;
-  video.style = style;
-  video.controls = true;
-  video.autoplay = true;
+    const source = document.createElement("source");
+    source.src = url;
+    source.type = "video/mp4";
 
-  const source = document.createElement("source");
-  source.src = url;
-  source.type = "video/mp4";
-
-  video.appendChild(source);
-  loading.parentNode.replaceChild(video, loading);
+    video.appendChild(source);
+    loading.parentNode.replaceChild(video, loading);
+  });
 };
 
 (async () => {
-  await init();
   addClickHandlersAllElements();
 })();

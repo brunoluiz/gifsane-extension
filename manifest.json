@@ -18,6 +18,8 @@
   ],
   "background": {
     "scripts": [
+      "src/vendor/ffmpeg.min.js",
+      "src/vendor/ffmpeg-core.js",
       "src/js/background.js"
     ],
     "persistent": true

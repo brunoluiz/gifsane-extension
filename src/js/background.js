@@ -1,27 +1,51 @@
-function isCSPHeader(headerName) {
-  return (
-    headerName === "CONTENT-SECURITY-POLICY" || headerName === "X-WEBKIT-CSP"
-  );
-}
+const createFileName = (ext) =>
+  `${Math.floor(Math.random() * Math.pow(2, 32) + 1)}.${ext}`;
+let ffmpeg;
 
-// Listens on new request
-chrome.webRequest.onHeadersReceived.addListener(
-  (details) => {
-    for (let i = 0; i < details.responseHeaders.length; i += 1) {
-      if (isCSPHeader(details.responseHeaders[i].name.toUpperCase())) {
-        const csp = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; ";
-        details.responseHeaders[i].value = csp;
-        console.log(details.responseHeaders[i]);
-      }
-    }
+const init = async () => {
+  if (ffmpeg) return;
 
-    return {
-      responseHeaders: details.responseHeaders,
-    };
-  },
-  {
-    urls: ["<all_urls>"],
-    types: ["main_frame"],
-  },
-  ["blocking", "responseHeaders"]
-);
+  const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
+  const settings = { corePath, log: true };
+
+  ffmpeg = await FFmpeg.createFFmpeg(settings);
+  await ffmpeg.load();
+};
+
+const blobToBase64 = (blob) => {
+  return new Promise((resolve, _) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+};
+
+chrome.extension.onMessage.addListener(function (
+  { src },
+  sender,
+  sendResponse
+) {
+  const process = async () => {
+    // this is 100% racy
+    await init();
+
+    const [inputFileName, outputFileName] = [
+      createFileName("gif"),
+      createFileName("mp4"),
+    ];
+
+    const file = await FFmpeg.fetchFile(src);
+    ffmpeg.FS("writeFile", inputFileName, file);
+
+    await ffmpeg.run("-f", "gif", "-i", inputFileName, outputFileName);
+
+    const data = ffmpeg.FS("readFile", outputFileName);
+    const blob = new Blob([data.buffer], { type: "video/mp4" });
+    const blobText = await blobToBase64(blob);
+
+    sendResponse({ blobText });
+  };
+
+  process();
+  return true;
+});
