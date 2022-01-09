@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "version": "1.0.0",
   "name": "GIF to Video",
   "author": "Bruno Luiz Silva <contact@brunoluiz.net>",
@@ -13,15 +13,10 @@
     }
   ],
   "web_accessible_resources": [
-    {
-      "resources": [
-        "src/vendor/ffmpeg-core.js",
-        "src/vendor/ffmpeg-core.wasm",
-        "src/vendor/ffmpeg-core.worker.js",
-        "src/vendor/ffmpeg-min.js.map"
-      ],
-      "matches": ["*://*/*"]
-    }
+    "src/vendor/ffmpeg-core.js",
+    "src/vendor/ffmpeg-core.wasm",
+    "src/vendor/ffmpeg-core.worker.js",
+    "src/vendor/ffmpeg-min.js.map"
   ],
   "action": {
     "default_icon": {
@@ -40,13 +35,5 @@
     "48": "src/img/icon-48.png",
     "128": "src/img/icon-128.png"
   },
-  "content_security_policy": {
-    "extension_pages": "default-src 'self'; media-src * blob:"
-  },
-  "cross_origin_embedder_policy": {
-    "value": "require-corp"
-  },
-  "cross_origin_opener_policy": {
-    "value": "same-origin"
-  }
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'"
 }
