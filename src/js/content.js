@@ -6,12 +6,10 @@ const init = async () => {
   if (ffmpeg) return;
 
   const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
-  const settings = { corePath, log: true };
+  const settings = { corePath };
 
-  console.log("loading ffmpeg...", settings);
   ffmpeg = await FFmpeg.createFFmpeg(settings);
   await ffmpeg.load();
-  console.log("ffmpeg loaded");
 };
 
 const addClickHandlersAllElements = () => {
