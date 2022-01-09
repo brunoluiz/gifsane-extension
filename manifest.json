@@ -13,10 +13,8 @@
     }
   ],
   "web_accessible_resources": [
-    "src/vendor/ffmpeg-core.js",
-    "src/vendor/ffmpeg-core.wasm",
-    "src/vendor/ffmpeg-core.worker.js",
-    "src/vendor/ffmpeg-min.js.map"
+    "src/img/*",
+    "src/vendor/*"
   ],
   "action": {
     "default_icon": {

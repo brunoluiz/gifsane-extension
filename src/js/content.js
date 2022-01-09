@@ -25,15 +25,16 @@ const start = async (obj) => {
 
   const loading = document.createElement("div");
   const loadingGif = document.createElement("img");
-  loading.width = width;
-  loading.height = height;
-  (loading.style.display = "flex"), (loading.style.alignItems = "center");
+  loading.style = style;
+  loading.style.display = "flex";
+  loading.style.alignItems = "center";
   loading.style.justifyContent = "center";
-  loading.style.height = height;
-  loading.style.width = width;
+  loading.style.height = `${height}px`;
+  loading.style.width = `${width}px`;
   loading.style.border = "1px solid #eee";
+  loading.style.background = "transparent";
 
-  loadingGif.src = "/loading.gif";
+  loadingGif.src = chrome.runtime.getURL("src/img/loading.gif");
   loadingGif.width = 48;
   loadingGif.height = 48;
   loadingGif.style = {
