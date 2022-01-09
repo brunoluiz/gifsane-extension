@@ -26,15 +26,7 @@
   },
   "permissions": [
     "storage",
-    "activeTab",
-    "webRequest",
-    "webRequestBlocking",
-    "http://*/*",
-    "https://*/*",
-    "<all_urls>",
-    "webRequest",
-    "webRequestBlocking",
-    "management"
+    "activeTab"
   ],
   "icons": {
     "48": "src/img/icon-48.png",
