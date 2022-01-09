@@ -1,15 +1,23 @@
 const createFileName = (ext) =>
   `${Math.floor(Math.random() * Math.pow(2, 32) + 1)}.${ext}`;
-let ffmpeg;
+let ffmpeg = undefined;
 
 const init = async () => {
-  if (ffmpeg) return;
+  if (ffmpeg && ffmpeg.isLoaded()) return;
 
   const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
-  const settings = { corePath, log: true };
+  const settings = { corePath };
 
   ffmpeg = await FFmpeg.createFFmpeg(settings);
   await ffmpeg.load();
+};
+
+const free = async () => {
+  try {
+    await ffmpeg.exit(); // free memory & address some weird behaviour on re-run
+  } catch (e) {
+    ffmpeg = undefined;
+  }
 };
 
 const blobToBase64 = (blob) => {
@@ -26,6 +34,8 @@ chrome.extension.onMessage.addListener(function (
   sendResponse
 ) {
   const process = async () => {
+    await init();
+
     const [inputFileName, outputFileName] = [
       createFileName("gif"),
       createFileName("mp4"),
@@ -37,6 +47,8 @@ chrome.extension.onMessage.addListener(function (
     await ffmpeg.run("-f", "gif", "-i", inputFileName, outputFileName);
 
     const data = ffmpeg.FS("readFile", outputFileName);
+    await free();
+
     const blob = new Blob([data.buffer], { type: "video/mp4" });
     const blobText = await blobToBase64(blob);
 
@@ -46,7 +58,3 @@ chrome.extension.onMessage.addListener(function (
   process();
   return true;
 });
-
-(async () => {
-  await init();
-})();
