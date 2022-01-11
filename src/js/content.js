@@ -9,25 +9,25 @@ const start = async (obj) => {
   const gif = obj;
   const { width, height, style } = gif;
 
-  const loading = document.createElement("div");
-  const loadingGif = document.createElement("img");
-  loading.style = style;
-  loading.style.display = "flex";
-  loading.style.alignItems = "center";
-  loading.style.justifyContent = "center";
-  loading.style.height = `${height}px`;
-  loading.style.width = `${width}px`;
-  loading.style.background = "rgba(0,0,0,.1)";
+  const wrapper = document.createElement("div");
+  wrapper.style = style;
+  wrapper.style.position = "relative";
+  wrapper.style.height = `${height}px`;
+  wrapper.style.width = `${width}px`;
 
-  loadingGif.src = chrome.runtime.getURL("src/img/loading.gif");
-  loadingGif.width = 48;
-  loadingGif.height = 48;
-  loadingGif.style = {
-    width: 48,
-    height: 48,
-  };
-  loading.appendChild(loadingGif);
-  gif.parentNode.replaceChild(loading, gif);
+  const loading = document.createElement("img");
+  loading.src = chrome.runtime.getURL("src/img/loading.gif");
+  loading.style.position = "absolute";
+  loading.style.bottom = "0";
+  loading.style.left = "0";
+  loading.style.padding = `10px`;
+  loading.style.height = "32px";
+  loading.style.background = "rgba(255,255,255,.8)";
+  loading.style.borderTopRightRadius = "5px";
+
+  wrapper.appendChild(gif.cloneNode());
+  wrapper.appendChild(loading);
+  gif.parentNode.replaceChild(wrapper, gif);
 
   chrome.extension.sendMessage({ src: gif.src }, async function ({ blobText }) {
     const blob = await (await fetch(blobText)).blob();
@@ -45,7 +45,7 @@ const start = async (obj) => {
     source.type = "video/mp4";
 
     video.appendChild(source);
-    loading.parentNode.replaceChild(video, loading);
+    wrapper.parentNode.replaceChild(video, wrapper);
   });
 };
 
