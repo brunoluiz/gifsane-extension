@@ -57,6 +57,8 @@ const start = async (container, { width, height, style, src }) => {
     const video = document.createElement("video");
     video.width = width;
     video.height = height;
+    video.style.width = `${width}px`;
+    video.style.height = `${height}px`;
     video.style = style;
     video.controls = true;
     video.autoplay = true;
