@@ -1,36 +1,40 @@
-const addClickHandlersAllElements = () => {
+const main = () => {
+  // adds convert handler to all GIFs
   document.querySelectorAll("img").forEach((img) => {
     if (!img.src.includes(".gif")) return;
-    const gif = img;
-    const { width, height, style, src } = gif;
-
-    const wrapper = document.createElement("div");
-    wrapper.style = style;
-    wrapper.style.position = "relative";
-    wrapper.appendChild(gif.cloneNode());
-
-    const convert = document.createElement("div");
-    convert.style.fontFamily = "sans-serif";
-    convert.style.letterSpacing = -0.25;
-    convert.style.position = "absolute";
-    convert.style.bottom = "0";
-    convert.style.left = "0";
-    convert.style.padding = `10px 18px`;
-    convert.style.background = "rgba(255,255,255,.8)";
-    convert.style.borderTopRightRadius = "5px";
-    convert.style.fontWeight = 700;
-    convert.style.cursor = "pointer";
-    convert.style.color = "#000";
-    convert.textContent = "Convert to video";
-    convert.onclick = (e) => {
-      convert.remove();
-      start(wrapper, { width, height, style, src });
-      return false;
-    };
-
-    wrapper.appendChild(convert);
-    gif.parentNode.replaceChild(wrapper, gif);
+    img.onload = () => handler(img);
   });
+};
+
+const handler = (img) => {
+  const { width, height, style, src } = img;
+
+  const wrapper = document.createElement("div");
+  wrapper.style = style;
+  wrapper.style.position = "relative";
+  wrapper.appendChild(img.cloneNode());
+
+  const convert = document.createElement("div");
+  convert.style.fontFamily = "sans-serif";
+  convert.style.letterSpacing = -0.25;
+  convert.style.position = "absolute";
+  convert.style.bottom = "0";
+  convert.style.left = "0";
+  convert.style.padding = `10px 18px`;
+  convert.style.background = "rgba(255,255,255,.8)";
+  convert.style.borderTopRightRadius = "5px";
+  convert.style.fontWeight = 700;
+  convert.style.cursor = "pointer";
+  convert.style.color = "#000";
+  convert.textContent = "Convert";
+  convert.onclick = () => {
+    convert.remove();
+    start(wrapper, { width, height, style, src });
+    return false;
+  };
+
+  wrapper.appendChild(convert);
+  img.parentNode.replaceChild(wrapper, img);
 };
 
 const start = async (container, { width, height, style, src }) => {
@@ -72,6 +76,4 @@ const start = async (container, { width, height, style, src }) => {
   });
 };
 
-(async () => {
-  addClickHandlersAllElements();
-})();
+main();
