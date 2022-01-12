@@ -9,7 +9,8 @@
         "*://*/*"
       ],
       "all_frames": true,
-      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/js/content.js"]
+      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/js/content.js"],
+      "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
@@ -26,13 +27,16 @@
   },
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*/*"
   ],
   "icons": {
     "48": "src/img/icon-48.png",
     "128": "src/img/icon-128.png"
   },
-  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'; media-src 'self' blob:",
   "cross_origin_embedder_policy": {
     "value": "require-corp"
   },
