@@ -24,13 +24,14 @@ const handler = (img) => {
   convert.style.position = "absolute";
   convert.style.bottom = "0";
   convert.style.left = "0";
-  convert.style.padding = `10px 18px`;
-  convert.style.background = "rgba(255,255,255,.8)";
+  convert.style.padding = `4px 10px`;
+  convert.style.background = "#10b981";
   convert.style.borderTopRightRadius = "5px";
   convert.style.fontWeight = 700;
   convert.style.cursor = "pointer";
   convert.style.color = "#000";
-  convert.textContent = "Convert";
+  convert.style.fontSize = "12px";
+  convert.textContent = "Convert ❯";
   convert.onclick = () => {
     convert.remove();
     start(wrapper, { width, height, style, src });
@@ -45,14 +46,14 @@ const start = async (container, { width, height, style, src }) => {
   const spinner = document.createElement("img");
   spinner.src = chrome.runtime.getURL("src/img/loading.gif");
   spinner.style.background = "transparent";
-  spinner.style.height = "22px";
+  spinner.style.height = "16px";
 
   const loading = document.createElement("div");
   loading.style.position = "absolute";
   loading.style.bottom = "0";
   loading.style.left = "0";
-  loading.style.padding = `10px 12px`;
-  loading.style.background = "rgba(255,255,255,.8)";
+  loading.style.padding = `4px 8px`;
+  loading.style.background = "#10b981";
   loading.style.borderTopRightRadius = "5px";
   loading.appendChild(spinner);
 
