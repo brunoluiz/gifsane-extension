@@ -2,7 +2,7 @@ const main = () => {
   // adds convert handler to all GIFs
   document.querySelectorAll("img").forEach((img) => {
     const isGif = Array.from(img.attributes).some((attr) => {
-      return attr.nodeValue.includes("://") && attr.nodeValue.includes(".gif");
+      return attr.nodeValue.includes(".gif");
     });
     if (!isGif) return;
 
