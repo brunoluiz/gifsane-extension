@@ -23,7 +23,7 @@ Due to the usage of WASM, is a bit tricky to upload this extension into web exte
 
 ## Try it out
 
-Here is a short GIF you can try to convert once you install the extension
+Here is a short GIF you can try to convert once you install the extension. You should see a `Convert` button on the bottom left corner.
 
 ![](./demo/demo.gif)
 
