@@ -5,17 +5,27 @@ If your favourite platform doesn't convert user GIFs into videos (looking at you
 help you. The main application for this is for long guide videos that are recorded in GIFs instead of a more
 ~sane~ normal format.
 
-![](./demo/demo.gif)
+![](./demo/demo.webp)
 
 ## Install
 
-- Chrome: 
-  - Go to `chrome://extensions/` and point to this extension folder
+Due to the usage of WASM, is a bit tricky to upload this extension into web extension stores.
+
+- Chrome and other Chromium browsers
+  - Go to `chrome://extensions/`
+  - Enable the `Developer mode` (toggle on top right corner)
+  - `Load unpacked` and point to the extension folder
 
 - Firefox:
   - Run `npm run link:firefox` (or run the script present on the `package.json` script for this task)
   - Go to `about://debugging/`
-  - `Load temporary add-on...` and point to this extension `manifest.json`
+  - `Load temporary add-on...` and point to the extension `manifest.json`
+
+## Try it out
+
+Here is a short GIF you can try to convert once you install the extension
+
+![](./demo/demo.gif)
 
 ## Caveats
 
