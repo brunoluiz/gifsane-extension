@@ -5,6 +5,8 @@
   "scripts": {
     "lint": "eslint ./src",
     "build": "rm -rf build && mkdir build && cp -R LICENSE manifest.json ./src ./build ",
+    "link:chrome": "cd src/vendor && ln -sf ./ffmpeg-core.mt.wasm ./ffmpeg-core.wasm && ln -sf ./ffmpeg-core.mt.js ./ffmpeg-core.js",
+    "link:firefox": "cd src/vendor && ln -sf ./ffmpeg-core.st.wasm ./ffmpeg-core.wasm && ln -sf ./ffmpeg-core.st.js ./ffmpeg-core.js",
     "deploy:chrome": "shipit chrome ./build",
     "deploy:firefox": "shipit firefox ./build",
     "deploy:landing": "gh-pages --dist ./public ",

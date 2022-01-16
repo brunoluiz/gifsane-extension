@@ -2,13 +2,23 @@
 
 Converts GIFs to embed video players, giving playback control over them. ~Basically does something browsers should do natively~
 
-![](./demo/SampleGIFImage_40kbmb.gif)
+![](./demo/demo.gif)
+
+## Usage
+
+- Chrome: 
+  - Run `npm link:chrome`
+  - Go to `chrome://extensions/` and point to this extension folder
+
+- Firefox:
+  - Run `npm link:firefox`
+  - Go to `about://debugging/`
+  - `Load temporary add-on...` and point to this extension `manifest.json`
 
 ## Caveats
 
 - It uses `ffmpeg.wasm`, which is quite slow for long videos
 - It uses Manifest V2 because some WASM CSP directives are not implemented and `ffmpeg.wasm` uses `document` selectors within its code. To port it to Manifest V3, the code will need to be placed in a worker which doesn't have access to the DOM (`document`).
-- Seems Firefox does not support `SharedArrayBuffer`, hence this extension can't be used with Firefox for now: https://bugzilla.mozilla.org/show_bug.cgi?id=1674383#c34
 
 ## To-do
 

@@ -1,6 +1,10 @@
-const Config = {
-  MIME: "video/mp4",
-  MULTI_THREADED: true,
+const isFirefox = typeof browser !== "undefined";
+// Firefox doesn't support SharedArrayBuffer and MP4, hence why
+// these conditionals are required. The performance penalty is quite
+// big but at least it works :)
+const config = {
+  MIME: isFirefox ? "video/webm" : "video/mp4",
+  MULTI_THREADED: isFirefox ? false : true,
   LOG: false,
 };
 
@@ -18,8 +22,8 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
 
     const settings = {
       corePath: chrome.runtime.getURL("src/vendor/ffmpeg-core.js"),
-      log: Config.LOG,
-      mainName: Config.MULTI_THREADED ? "proxy_main" : "main",
+      log: config.LOG,
+      mainName: config.MULTI_THREADED ? "proxy_main" : "main",
     };
 
     ffmpeg = await FFmpeg.createFFmpeg(settings);
@@ -33,7 +37,7 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
 
     const [inputFile, outputFile] = [
       `${Date.now()}.gif`,
-      `${Date.now()}.${Config.MIME.split("/")[1]}`,
+      `${Date.now()}.${config.MIME.split("/")[1]}`,
     ];
 
     // Write file binary into ECScripten/WASM FS
@@ -52,13 +56,13 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
     await ffmpeg.exit();
 
     // Convert output data into blob, as it can be later imported as `blob://...`
-    const blob = new Blob([outputFileData.buffer], { type: Config.MIME });
+    const blob = new Blob([outputFileData.buffer], { type: config.MIME });
 
     // This is a bit of a hack: to pass this blob back to the content script without losing
     // data, as send response only sends string marshalled data, convert the blob into base64
     const blobText = await blobToBase64(blob);
 
-    sendResponse({ blobText, mimeType: Config.MIME });
+    sendResponse({ blobText, mimeType: config.MIME });
   };
 
   // "fire and forget" style
