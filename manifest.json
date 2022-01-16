@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "version": "1.0.0",
-  "name": "GIF to Video",
+  "name": "GIFSane",
   "author": "Bruno Luiz Silva <contact@brunoluiz.net>",
   "content_scripts": [
     {
