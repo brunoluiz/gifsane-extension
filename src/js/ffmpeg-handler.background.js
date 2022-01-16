@@ -6,7 +6,7 @@ const blobToBase64 = (blob) => {
   });
 };
 
-chrome.extension.onMessage.addListener(function ({ src }, _, sendResponse) {
+chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
   const create = async () => {
     let ffmpeg = undefined;
 

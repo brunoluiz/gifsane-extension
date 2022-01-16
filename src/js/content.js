@@ -70,7 +70,7 @@ const start = async (container, { width, height, style, src }) => {
 
   container.appendChild(loading);
 
-  chrome.extension.sendMessage({ src }, async function ({ blobText }) {
+  chrome.runtime.sendMessage({ src }, async function ({ blobText }) {
     // A bit of a hack, as it decodes the blob://{{ base64 }} into an usable
     // blob for URL.createObjectURL
     const blob = await (await fetch(blobText)).blob();
