@@ -84,6 +84,7 @@ const start = async (container, { width, height, style, src }) => {
     video.style = style;
     video.controls = true;
     video.autoplay = true;
+    video.loop = true;
 
     const source = document.createElement("source");
     source.src = url;
