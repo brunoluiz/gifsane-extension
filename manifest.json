@@ -21,7 +21,8 @@
     "scripts": [
       "src/vendor/ffmpeg.min.js",
       "src/vendor/ffmpeg-core.js",
-      "src/js/background.js"
+      "src/js/request-middleware.background.js",
+      "src/js/ffmpeg-handler.background.js"
     ],
     "persistent": true
   },

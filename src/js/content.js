@@ -1,6 +1,8 @@
 const main = () => {
   // adds convert handler to all GIFs
   document.querySelectorAll("img").forEach((img) => {
+    // This is a hack as some GIF srcs do not end in `.gif` but have HTML
+    // attributes indicating it is a gif
     const isGif = Array.from(img.attributes).some((attr) => {
       return attr.nodeValue.includes(".gif");
     });
@@ -60,6 +62,8 @@ const start = async (container, { width, height, style, src }) => {
   container.appendChild(loading);
 
   chrome.extension.sendMessage({ src }, async function ({ blobText }) {
+    // A bit of a hack, as it decodes the blob://{{ base64 }} into an usable
+    // blob for URL.createObjectURL
     const blob = await (await fetch(blobText)).blob();
     const url = URL.createObjectURL(blob);
 
