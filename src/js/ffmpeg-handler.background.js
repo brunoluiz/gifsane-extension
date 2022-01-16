@@ -11,6 +11,9 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
     let ffmpeg = undefined;
 
     const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
+
+    // Multi Threaded = `proxy_main` (spins up a service worker for FFMPEG)
+    // Single Threaded = `main`
     const settings = { corePath, log: false, mainName: "proxy_main" };
 
     ffmpeg = await FFmpeg.createFFmpeg(settings);
