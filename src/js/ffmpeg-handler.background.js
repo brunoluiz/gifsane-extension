@@ -11,7 +11,7 @@ chrome.extension.onMessage.addListener(function ({ src }, _, sendResponse) {
     let ffmpeg = undefined;
 
     const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
-    const settings = { corePath, log: true, mainName: "proxy_main" };
+    const settings = { corePath, log: false, mainName: "proxy_main" };
 
     ffmpeg = await FFmpeg.createFFmpeg(settings);
     await ffmpeg.load();
