@@ -1,10 +1,18 @@
 const main = () => {
+  const isURL = (string) => {
+    try {
+      return Boolean(new URL(string, window.location.origin));
+    } catch (e) {
+      return false;
+    }
+  };
+
   // adds convert handler to all GIFs
   document.querySelectorAll("img").forEach((img) => {
     // This is a hack as some GIF srcs do not end in `.gif` but have HTML
     // attributes indicating it is a gif
     const isGif = Array.from(img.attributes).some((attr) => {
-      return attr.nodeValue.includes(".gif");
+      return isURL(attr.nodeValue) && attr.nodeValue.includes(".gif");
     });
     if (!isGif) return;
 
@@ -14,6 +22,7 @@ const main = () => {
 
 const handler = (img) => {
   const { width, height, style, src } = img;
+  if (width < 72) return;
 
   const wrapper = document.createElement("div");
   wrapper.style = style;
