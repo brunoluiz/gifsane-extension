@@ -7,29 +7,20 @@ const blobToBase64 = (blob) => {
 };
 
 chrome.extension.onMessage.addListener(function ({ src }, _, sendResponse) {
-  let ffmpeg = undefined;
-
-  // start ffmpeg according to documentation. FFmpeg sadly is a global object.
-  const init = async () => {
-    if (ffmpeg && ffmpeg.isLoaded()) return;
+  const create = async () => {
+    let ffmpeg = undefined;
 
     const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
     const settings = { corePath, log: true, mainName: "proxy_main" };
 
     ffmpeg = await FFmpeg.createFFmpeg(settings);
     await ffmpeg.load();
-  };
 
-  const free = async () => {
-    try {
-      await ffmpeg.exit(); // free memory & address some weird behaviour on re-run
-    } catch (e) {
-      ffmpeg = undefined;
-    }
+    return ffmpeg;
   };
 
   const process = async () => {
-    await init();
+    const ffmpeg = await create();
 
     const [inputFile, outputFile] = [`${Date.now()}.gif`, `${Date.now()}.mp4`];
 
@@ -45,9 +36,8 @@ chrome.extension.onMessage.addListener(function ({ src }, _, sendResponse) {
     // Read output from WASM FS
     const outputFileData = ffmpeg.FS("readFile", outputFile);
 
-    // Frees ffmpeg instance. Once it finishes the command it exits but it doesn't
-    // seem to clear itself.
-    await free();
+    // Frees ffmpeg instance once it exits with process.exit(0)
+    await ffmpeg.exit();
 
     // Convert output data into blob, as it can be later imported as `blob://...`
     const blob = new Blob([outputFileData.buffer], { type: "video/mp4" });
