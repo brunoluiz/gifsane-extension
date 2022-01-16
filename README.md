@@ -1,9 +1,7 @@
 # GIFSane
 
 Converts GIFs to sane controllable embed video players ~Basically does something browsers should do natively~.
-If your favourite platform doesn't convert user GIFs into videos (looking at you GitHub), this extension will
-help you. The main application for this is for long guide videos that are recorded in GIFs instead of a more
-~sane~ normal format.
+If your favourite platform doesn't convert user GIFs into videos, this extension will help you.
 
 ![](./demo/demo.webp)
 
@@ -38,3 +36,5 @@ Here is a short GIF you can try to convert once you install the extension. You s
 
 - Add support to sending to a remote server
 - Write down landing page
+- Try to replace FFMPEG with something else?
+- Deal with `.webp` (ffmpegwasm doesn't seem to like those)
