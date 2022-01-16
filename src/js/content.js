@@ -70,7 +70,7 @@ const start = async (container, { width, height, style, src }) => {
 
   container.appendChild(loading);
 
-  chrome.runtime.sendMessage({ src }, async function ({ blobText }) {
+  chrome.runtime.sendMessage({ src }, async function ({ blobText, mimeType }) {
     // A bit of a hack, as it decodes the blob://{{ base64 }} into an usable
     // blob for URL.createObjectURL
     const blob = await (await fetch(blobText)).blob();
@@ -87,7 +87,7 @@ const start = async (container, { width, height, style, src }) => {
 
     const source = document.createElement("source");
     source.src = url;
-    source.type = "video/mp4";
+    source.type = mimeType;
 
     video.appendChild(source);
     container.parentNode.replaceChild(video, container);

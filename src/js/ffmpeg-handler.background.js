@@ -1,3 +1,9 @@
+const Config = {
+  MIME: "video/mp4",
+  MULTI_THREADED: true,
+  LOG: false,
+};
+
 const blobToBase64 = (blob) => {
   return new Promise((resolve, _) => {
     const reader = new FileReader();
@@ -10,11 +16,11 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
   const create = async () => {
     let ffmpeg = undefined;
 
-    const corePath = chrome.runtime.getURL("src/vendor/ffmpeg-core.js");
-
-    // Multi Threaded = `proxy_main` (spins up a service worker for FFMPEG)
-    // Single Threaded = `main`
-    const settings = { corePath, log: false, mainName: "proxy_main" };
+    const settings = {
+      corePath: chrome.runtime.getURL("src/vendor/ffmpeg-core.js"),
+      log: Config.LOG,
+      mainName: Config.MULTI_THREADED ? "proxy_main" : "main",
+    };
 
     ffmpeg = await FFmpeg.createFFmpeg(settings);
     await ffmpeg.load();
@@ -25,7 +31,10 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
   const process = async () => {
     const ffmpeg = await create();
 
-    const [inputFile, outputFile] = [`${Date.now()}.gif`, `${Date.now()}.mp4`];
+    const [inputFile, outputFile] = [
+      `${Date.now()}.gif`,
+      `${Date.now()}.${Config.MIME.split("/")[1]}`,
+    ];
 
     // Write file binary into ECScripten/WASM FS
     // More details at https://emscripten.org/docs/api_reference/Filesystem-API.html
@@ -43,13 +52,13 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
     await ffmpeg.exit();
 
     // Convert output data into blob, as it can be later imported as `blob://...`
-    const blob = new Blob([outputFileData.buffer], { type: "video/mp4" });
+    const blob = new Blob([outputFileData.buffer], { type: Config.MIME });
 
     // This is a bit of a hack: to pass this blob back to the content script without losing
     // data, as send response only sends string marshalled data, convert the blob into base64
     const blobText = await blobToBase64(blob);
 
-    sendResponse({ blobText });
+    sendResponse({ blobText, mimeType: Config.MIME });
   };
 
   // "fire and forget" style
