@@ -5,6 +5,8 @@ If your favourite platform doesn't convert user GIFs into videos, this extension
 
 ![](./demo/demo.webp)
 
+> The animation above uses WebM (more optimised than GIF) which is not currently supported for now
+
 ## Install
 
 Due to the usage of WASM, is a bit tricky to upload this extension into web extension stores.
@@ -16,12 +18,12 @@ Due to the usage of WASM, is a bit tricky to upload this extension into web exte
 
 - Firefox:
   - Run `npm run link:firefox` (or run the script present on the `package.json` script for this task)
-  - Go to `about://debugging/`
+  - Go to `about:debugging`
   - `Load temporary add-on...` and point to the extension `manifest.json`
 
 ## Try it out
 
-Here is a short GIF you can try to convert once you install the extension. You should see a `Convert` button on the bottom left corner.
+Here is a short GIF you can try to convert once you install the extension. You need to `Right Click -> GIFSane` and choose your preferred conversion method.
 
 ![](./demo/demo.gif)
 
