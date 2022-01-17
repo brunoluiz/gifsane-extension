@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0.0",
   "name": "GIFSane",
   "author": "Bruno Luiz Silva <contact@brunoluiz.net>",
@@ -14,34 +14,33 @@
     }
   ],
   "web_accessible_resources": [
-    "src/img/*",
-    "src/vendor/*"
+    {
+      "resources": [
+        "src/img/*",
+        "src/vendor/*"
+      ],
+      "matches": ["*://*/*"]
+    }
   ],
   "background": {
-    "scripts": [
-      "src/vendor/ffmpeg.min.js",
-      "src/vendor/ffmpeg-core.js",
-      "src/middlewares/request-middleware.js",
-      "src/handlers/ffmpeg-handler.js",
-      "src/handlers/download-handler.js",
-      "src/context-menu.js"
-    ],
-    "persistent": true
+    "service_worker": "src/worker.js"
   },
   "permissions": [
     "storage",
     "activeTab",
     "downloads",
-    "contextMenus",
-    "webRequest",
-    "webRequestBlocking",
-    "*://*/*"
+    "contextMenus"
   ],
   "icons": {
     "48": "src/img/icon-48.png",
     "128": "src/img/icon-128.png"
   },
-  "content_security_policy": "script-src 'self' 'wasm-eval' 'unsafe-eval' blob:; object-src 'self'; media-src 'self' blob:",
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; media-src * blob:; connect-src *"
+  },
   "cross_origin_embedder_policy": {
     "value": "require-corp"
   },
