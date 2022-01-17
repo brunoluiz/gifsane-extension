@@ -1,7 +1,7 @@
 {
-  "name": "@brunoluiz/grammarly-markdown-extension",
-  "version": "1.8.0",
-  "description": "🖋 Convert Grammarly to Markdown (browser extension)",
+  "name": "@brunoluiz/gifsane",
+  "version": "1.0.0",
+  "description": "⏯ Converts GIFs to sane controllable embed video players)",
   "scripts": {
     "lint": "eslint ./src",
     "build": "rm -rf build && mkdir build && cp -R LICENSE manifest.json ./src ./build ",
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brunoluiz/grammarly-markdown-extension.git"
+    "url": "git+https://github.com/brunoluiz/gifsane-extension.git"
   },
   "keywords": [],
   "author": "Bruno Luiz Silva <contact@brunoluiz.net>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/brunoluiz/grammarly-markdown-extension/issues"
+    "url": "https://github.com/brunoluiz/gifsane-extension/issues"
   },
-  "homepage": "https://github.com/brunoluiz/grammarly-markdown-extension#readme",
+  "homepage": "https://github.com/brunoluiz/gifsane-extension#readme",
   "devDependencies": {
     "@wext/shipit": "^0.2.1",
     "eslint": "^7.23.0",
