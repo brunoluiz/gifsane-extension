@@ -64,7 +64,17 @@ chrome.runtime.onMessage.addListener(({ data, type }) => {
           source.type = mimeType;
 
           video.appendChild(source);
-          container.parentNode.replaceChild(video, container);
+
+          if (container.parentNode.nodeName !== "A") {
+            container.parentNode.replaceChild(video, container);
+            return;
+          }
+
+          // If there was a link wrapping the GIF, replace it as it will hijack mouse events
+          container.parentNode.parentNode.replaceChild(
+            video,
+            container.parentNode
+          );
         }
       );
     }
