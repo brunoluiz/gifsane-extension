@@ -16,7 +16,13 @@ const blobToBase64 = (blob) => {
   });
 };
 
-chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
+chrome.runtime.onMessage.addListener(function (
+  { data: { src }, type },
+  _,
+  sendResponse
+) {
+  if (type !== "conversion_requested") return;
+
   const create = async () => {
     let ffmpeg = undefined;
 
@@ -78,11 +84,3 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
   // this return is required otherwise the listener fails (webex oddities)
   return true;
 });
-
-document.addEventListener(
-  "contextmenu",
-  function (event) {
-    console.log(event);
-  },
-  true
-);

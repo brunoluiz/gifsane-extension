@@ -1,6 +1,6 @@
 let lastImageClicked;
 
-const main = () => {
+const attach = () => {
   document.querySelectorAll("img").forEach((img) => {
     img.oncontextmenu = () => {
       lastImageClicked = img;
@@ -38,12 +38,11 @@ chrome.runtime.onMessage.addListener(({ data, type }) => {
   const container = toLoading(lastImageClicked);
 
   switch (type) {
-    case "embed_video": {
+    case "embed_conversion_requested": {
       const { width, height, style } = lastImageClicked;
-      const { src } = data;
 
       return chrome.runtime.sendMessage(
-        { src },
+        { data: { src: data.src }, type: "conversion_requested" },
         async function ({ blobText, mimeType }) {
           // A bit of a hack, as it decodes the blob://{{ base64 }} into an usable
           // blob for URL.createObjectURL
@@ -69,7 +68,27 @@ chrome.runtime.onMessage.addListener(({ data, type }) => {
         }
       );
     }
+    case "download_conversion_requested": {
+      const img = lastImageClicked.cloneNode();
+
+      return chrome.runtime.sendMessage(
+        { data: { src: data.src }, type: "conversion_requested" },
+        async function ({ blobText, mimeType }) {
+          // A bit of a hack, as it decodes the blob://{{ base64 }} into an usable
+          // blob for URL.createObjectURL
+          const blob = await (await fetch(blobText)).blob();
+          const url = URL.createObjectURL(blob);
+          chrome.runtime.sendMessage({
+            data: { url },
+            type: "download_requested",
+          });
+
+          container.parentNode.replaceChild(img, container);
+          attach();
+        }
+      );
+    }
   }
 });
 
-main();
+attach();
