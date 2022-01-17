@@ -47,7 +47,14 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
 
     // Run ffmpeg command -- be aware it is quite limited and many options are not
     // supported without recompiling
-    await ffmpeg.run("-f", "gif", "-i", inputFile, outputFile);
+    await ffmpeg.run(
+      // allow variable frame rate
+      "-vsync",
+      "2",
+      "-i",
+      inputFile,
+      outputFile
+    );
 
     // Read output from WASM FS
     const outputFileData = ffmpeg.FS("readFile", outputFile);
