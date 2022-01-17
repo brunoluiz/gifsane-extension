@@ -22,13 +22,15 @@
       "src/vendor/ffmpeg.min.js",
       "src/vendor/ffmpeg-core.js",
       "src/js/request-middleware.background.js",
-      "src/js/ffmpeg-handler.background.js"
+      "src/js/ffmpeg-handler.background.js",
+      "src/js/context-menu-handler.background.js"
     ],
     "persistent": true
   },
   "permissions": [
     "storage",
     "activeTab",
+    "contextMenus",
     "webRequest",
     "webRequestBlocking",
     "*://*/*"

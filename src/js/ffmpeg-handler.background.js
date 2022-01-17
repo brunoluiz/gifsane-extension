@@ -78,3 +78,11 @@ chrome.runtime.onMessage.addListener(function ({ src }, _, sendResponse) {
   // this return is required otherwise the listener fails (webex oddities)
   return true;
 });
+
+document.addEventListener(
+  "contextmenu",
+  function (event) {
+    console.log(event);
+  },
+  true
+);
