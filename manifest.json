@@ -23,8 +23,8 @@
       "src/vendor/ffmpeg-core.js",
       "src/middlewares/request-middleware.js",
       "src/handlers/ffmpeg-handler.js",
-      "src/handlers/context-menu-handler.js",
-      "src/handlers/download-handler.js"
+      "src/handlers/download-handler.js",
+      "src/context-menu.js"
     ],
     "persistent": true
   },
