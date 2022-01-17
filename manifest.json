@@ -9,7 +9,7 @@
         "*://*/*"
       ],
       "all_frames": true,
-      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/js/content.js"],
+      "js": ["src/vendor/ffmpeg.min.js", "src/vendor/ffmpeg-core.js", "src/content.js"],
       "run_at": "document_end"
     }
   ],
@@ -21,10 +21,10 @@
     "scripts": [
       "src/vendor/ffmpeg.min.js",
       "src/vendor/ffmpeg-core.js",
-      "src/js/request-middleware.background.js",
-      "src/js/ffmpeg-handler.background.js",
-      "src/js/context-menu-handler.background.js",
-      "src/js/download-handler.background.js"
+      "src/middlewares/request-middleware.js",
+      "src/handlers/ffmpeg-handler.js",
+      "src/handlers/context-menu-handler.js",
+      "src/handlers/download-handler.js"
     ],
     "persistent": true
   },
