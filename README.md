@@ -27,6 +27,7 @@ Here is a short GIF you can try to convert once you install the extension. You n
 
 ![](./demo/demo.gif)
 
+
 ## Caveats
 
 - It uses `ffmpeg.wasm`, which is quite slow for long videos
@@ -40,3 +41,9 @@ Here is a short GIF you can try to convert once you install the extension. You n
 - Write down landing page
 - Try to replace FFMPEG with something else?
 - Deal with `.webp` (ffmpegwasm doesn't seem to like those)
+
+## Attributions
+
+- FFMpeg.wasm: https://github.com/ffmpegwasm/ffmpeg.wasm (fork used at https://github.com/brunoluiz/ffmpeg.wasm)
+- FFMpeg.wasm-core https://github.com/ffmpegwasm/ffmpeg.wasm-core (fork used at https://github.com/brunoluiz/ffmpeg.wasm-core)
+- FFMpeg: https://github.com/FFmpeg/FFmpeg
