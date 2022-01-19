@@ -16,6 +16,7 @@
   "web_accessible_resources": [
     {
       "resources": [
+        "src/*",
         "src/img/*",
         "src/vendor/*"
       ],
@@ -39,7 +40,7 @@
     "*://*/*"
   ],
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; media-src * blob:; connect-src *"
+    "extension_pages": "default-src 'self'; media-src * blob:; connect-src *; script-src  'self' 'unsafe-eval'"
   },
   "cross_origin_embedder_policy": {
     "value": "require-corp"
