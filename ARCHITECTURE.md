@@ -2,7 +2,28 @@
 
 ## Event flow
 
-WIP
+It uses events to control the signalling between context menu, background workers (ffmpeg and download manager) and content script.
+
+### "Replace with Video Player" flow
+
+1. User clicks on Context Menu
+1. `./src/context-menu.js` emits `embed_conversion_requested` event
+1. `./src/content.js` receives `embed_conversion_requested` and set a loading component within the image
+1. `./src/content.js` emits `conversion_requested` event
+1. `./src/handlers/ffmpeg-handler.js` receives `conversion_requested` and process the input
+1. `./src/handlers/ffmpeg-handler.js` triggers the `sendResponse` callback
+1. `./src/content.js` receives callback and replace image component
+
+### "Download as Video" flow
+
+1. User clicks on Context Menu
+1. `./src/context-menu.js` emits `download_conversion_requested` event
+1. `./src/content.js` receives `embed_conversion_requested` and set a loading component within the image
+1. `./src/content.js` emits `conversion_requested` event
+1. `./src/handlers/ffmpeg-handler.js` receives `conversion_requested` and process the input
+1. `./src/handlers/ffmpeg-handler.js` triggers the `sendResponse` callback
+1. `./src/content.js` receives callback and emits `conversion_requested`
+1. `./src/handlers/download-handler.js` receives `conversion_requested` and triggers a download
 
 ## Folder structure
 
