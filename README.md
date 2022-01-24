@@ -35,6 +35,10 @@ Here is a short GIF you can try to convert once you install the extension. You n
 - It can't be published on Chrome Store due to Manifest V2 :)
 - It will stop working in January 2023 in Chrome if this can't be ported to Manifest V3.
 
+## Related notes and blog posts
+
+- [GIFs (sane) playback control using WASM and FFmpeg](https://brunoluiz.net/blog/2022/jan/gif-sane-playback-control-ffmpegwasm/): how it was implemented, and some caveats and tricks that were required during the implementation
+
 ## To-do
 
 - Add support to sending to a remote server
